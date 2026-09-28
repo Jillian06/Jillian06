@@ -31,9 +31,9 @@ My experience spans autonomous path planning, embedded robotic systems, spiking 
 | Project | Focus | Technologies |
 |---|---|---|
 | [**ROS 2 Autonomous Navigation**](https://github.com/Jillian06/ros2-autonomous-navigation) | Custom 8-connected A* global planning, feedback path following, LiDAR interfaces, Gazebo simulation, automated tests | ROS 2, Python, Gazebo, A*, Control |
-| **ADC-Aware BFP FFT Accelerator** | 1024-point radix-2 FFT architecture for FMCW radar with block-floating-point scaling and hardware-aware verification | SystemVerilog, Python, FPGA, DSP |
-| **Autonomous Path Planning Research** | Enhanced A* navigation research with an IEEE conference publication | A*, Robotics, Algorithm Design |
-| **Spiking Neural Networks** | Low-power / hardware-aware neural inference and embedded-AI research | PyTorch, SNNs, FPGA-oriented ML |
+| [**ADC-Aware BFP FFT Accelerator**](https://github.com/Jillian06/fmcw-radar-bfp-fft) | 1024-point radix-2 FFT architecture for FMCW radar with block-floating-point scaling and hardware-aware verification | SystemVerilog, Python, FPGA, DSP |
+| [**Autonomous Path Planning Research**](https://github.com/Jillian06/safe-astar-path-planning) | Enhanced A* navigation research with an IEEE conference publication | A*, Robotics, Algorithm Design |
+| [**Spiking Neural Networks**](https://github.com/Jillian06/neuromorphic-snn-research) | Low-power / hardware-aware neural inference and embedded-AI research | PyTorch, SNNs, Hardware-aware ML |
 | **Embedded Robotic Systems** | Sensor integration, PWM / motor control, debugging, and hardware–software interfaces | STM32, C/C++, Sensors, PCB |
 
 ## Technical toolkit
@@ -45,7 +45,7 @@ My experience spans autonomous path planning, embedded robotic systems, spiking 
 
 ## Publication
 
-**B. Cao, Z. Yang, L. Yu, Y. Zhang**, “Research on the star algorithm for safe path planning,” *2023 IEEE International Conference on Computer Engineering, Communication and Emerging Technology (ICCECT)*, pp. 105–109.
+**B. Cao, Z. Yang, L. Yu, Y. Zhang**, “Research on the star algorithm for safe path planning,” *2023 IEEE International Conference on Control, Electronics and Computer Technology (ICCECT)*, pp. 105–109. [DOI](https://doi.org/10.1109/ICCECT57938.2023.10141167)
 
 ## Current focus
 
@@ -55,6 +55,9 @@ I am currently strengthening my robotics software stack through ROS 2 navigation
 
 - 🌐 [Engineering portfolio](https://Jillian06.github.io)
 - 🤖 [ROS 2 Autonomous Navigation](https://github.com/Jillian06/ros2-autonomous-navigation)
+- 📡 [FMCW Adaptive BFP FFT](https://github.com/Jillian06/fmcw-radar-bfp-fft)
+- 🧭 [Safe A* Path Planning](https://github.com/Jillian06/safe-astar-path-planning)
+- 🧠 [Neuromorphic SNN Research](https://github.com/Jillian06/neuromorphic-snn-research)
 - 📚 [All public repositories](https://github.com/Jillian06?tab=repositories)
 
 <div align="center">
