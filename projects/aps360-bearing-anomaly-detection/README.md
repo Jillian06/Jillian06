@@ -1,79 +1,71 @@
-# APS360 — Industrial Bearing Anomaly Detection
+# APS360 — Bearing Anomaly Detection for Industrial Condition Monitoring
 
-**University of Toronto | Applied Machine Learning**  
-**Project:** Anomaly Detection in Industrial Machinery Using Autoencoders on Vibration Data  
-**Focus:** Unsupervised learning · vibration sensing · signal processing · anomaly evaluation
+**University of Toronto · Applied Machine Learning · Python / PyTorch / Signal Processing**
 
-## Motivation
+This project investigates an industrial engineering question: **Can an ML model flag unusual bearing vibrations without requiring a large labeled fault-training dataset?** The approach uses normal-only training and reconstruction error, with conservative evaluation practices.
 
-Unexpected bearing faults create expensive industrial downtime. Fault examples are often scarce compared with normal operating data, so this project investigates **normal-only learning**: train a model to reconstruct healthy vibration patterns, and flag test signals with unusually high reconstruction error.
+## Engineering problem and why the result matters
 
-## End-to-end approach
+Machinery diagnostics must handle raw sensor measurements, changing sampling rates, and expensive false alarms. A model's score is only useful when its preprocessing, threshold and validation conditions are explicit. This project therefore combined vibration-signal processing, unsupervised neural networks, classical baselines and error analysis.
+
+## Reproducible processing workflow
 
 ```text
-CWRU bearing vibration data (.mat)
-   -> sampling-rate harmonization (12 kHz)
-   -> source-file-aware train / validation / test split
-   -> 4096-sample vibration windows
-   -> Hann-windowed STFT
-   -> normalized 128 x 128 log-magnitude spectrogram
-   -> convolutional autoencoder
-   -> reconstruction mean-squared error
-   -> normal-validation threshold (mean + 3 sigma)
-   -> anomaly flag
+CWRU bearing signal files (.mat; normal and fault recordings)
+  → sampling-rate harmonization to 12 kHz
+  → source-recording-level split before overlapping windowing
+  → 4096-sample windows (75% overlap)
+  → Hann-windowed short-time Fourier transform (STFT)
+  → normalized 128 × 128 log-magnitude spectrograms
+  → PyTorch convolutional autoencoder (normal-only training)
+  → spectrogram reconstruction mean squared error
+  → threshold from normal validation data: mean + 3 standard deviations
+  → normal / anomaly flag
 ```
 
-### Neural models
+**Engineering sanity checks:** harmonize time and frequency axes across recordings, prevent window leakage across partitions, monitor reconstruction errors rather than classification accuracy alone, and avoid using held-out fault labels to set operating thresholds.
 
-- **Convolutional Autoencoder (CAE):** three stride-2 convolutional encoder blocks, a 128-dimensional latent representation, and a transposed-convolution decoder. Training minimizes spectrogram reconstruction MSE on normal windows only.
-- **Variational Autoencoder (VAE):** a probabilistic extension assessed against the main CAE.
-- **Training:** PyTorch with Adam, learning-rate scheduling, early stopping and validation monitoring.
+## Models and comparisons
 
-### Classical comparisons
+**Primary model — CAE:** three stride-2 convolutional encoder blocks and a 128-dimensional latent representation; a mirrored transposed-convolution decoder reconstructs the input spectrogram. Trained with Adam, scheduling and early stopping on normal data.
 
-Four unsupervised baselines were built on vibration-window statistics: One-Class SVM, Isolation Forest, Local Outlier Factor, and PCA reconstruction error. The feature set included RMS, kurtosis, crest factor, standard deviation, skewness, peak-to-peak amplitude and additional waveform statistics.
+**Additional model — VAE:** evaluated as a probabilistic neural extension.
 
-### Data leakage and evaluation
+**Classical baselines:** One-Class SVM, Isolation Forest, Local Outlier Factor and PCA reconstruction error. Baselines used handcrafted waveform statistics (including RMS, kurtosis, crest factor, and peak-to-peak amplitude) for a useful comparison against learned spectrogram representations.
 
-Split the source files *before* generating overlapping windows to prevent near-duplicate signals from leaking between sets. The anomaly threshold used **normal validation data**, not fault labels; faulty samples were used to evaluate detection behavior.
+## Reported experiment (selected CWRU subset)
 
-The reported experiment uses a CWRU subset with:
-
-| Split | Windows |
+| Dataset partition | Number of windows |
 |---|---:|
-| Train (normal) | 286 |
-| Validation (normal) | 56 |
-| Test (normal + fault) | 1,444 |
-
-## Reported results
-
-The project's progress report includes the following measurements on its **selected held-out CWRU dataset**:
+| Normal training | 286 |
+| Normal validation | 56 |
+| Test — normal and fault | 1,444 |
 
 | Model | AUROC | Accuracy |
 |---|---:|---:|
-| CAE (primary) | **1.0000** | **1.0000** |
+| **Convolutional autoencoder** | **1.0000** | **1.0000** |
 | One-Class SVM | 1.0000 | 1.0000 |
 | Local Outlier Factor | 1.0000 | 1.0000 |
-| PCA Reconstruction | 1.0000 | 0.9972 |
+| PCA reconstruction | 1.0000 | 0.9972 |
 | Isolation Forest | 0.9808 | 0.8414 |
-| VAE (extension) | 0.9410 | Not reported in comparison table |
+| VAE (extension) | 0.9410 | Not stated in the comparison table |
 
-**Interpretation:** Several simple baselines also performed nearly perfectly on this particular fault subset. This result supports the feasibility of anomaly detection on these signals, but **does not demonstrate that the CAE outperforms all classical baselines or generalizes to new machines**. An external MFPT evaluation interface was proposed; cross-dataset performance should not be claimed without executing and reporting that evaluation.
+**Interpretation and limitations:** The near-perfect scores for the CAE **and** simple baselines suggest that fault patterns in this subset are relatively easy to separate. They do **not** establish superiority of deep learning, robustness across load/sensor configurations, or validation on external machines. The project outlined MFPT cross-dataset evaluation; no external-dataset result is claimed.
 
-## Engineering highlights
+## How this experience transfers to engineering AI tools
 
-- End-to-end connection between accelerometer data, frequency-domain preprocessing, neural reconstruction, and anomaly decisions.
-- Careful handling of heterogeneous original sampling rates (48 kHz and 12 kHz).
-- Comparison of neural and non-neural detection approaches using identical evaluation splits.
-- Investigation of reconstruction-error maps and fault-relevant frequency structure.
-- Reported metrics include AUROC, average precision, balanced accuracy, and accuracy.
+| Practical task | Relevant project experience |
+|---|---|
+| Build Python/ML functionality | Spectrogram preprocessing, PyTorch CAE/VAE, scikit-learn baselines |
+| Check data correctness | Sampling-rate harmonization, file-level splits and leakage avoidance |
+| Validate outputs | Metrics, baseline comparison, reconstruction inspection, explicit limitations |
+| Surface engineering context | Sensor units, data provenance, thresholds and operation assumptions |
+| Communicate decisions | Documented model pipeline, evaluation design and engineering trade-offs |
 
-## Technology
+A future engineer-facing application could expose **anomaly scores, underlying measurements, threshold logic, model version and review flags**. This is a proposed product direction, not a claim that an industrial web service, database-backed system or production deployment exists.
 
-Python · PyTorch · scikit-learn · NumPy · STFT · CNNs · Autoencoders · Anomaly Detection · Statistical Model Evaluation
+## Code and dataset note
 
-## Source and reproducibility
+This directory is a **technical case study based on the APS360 project report**, not the original full implementation repository. The published portfolio does not presently include the complete training notebook. Raw data remain with the CWRU dataset provider. Full reproducibility requires the sanitized project notebook, environment pinning and exact source-data manifests.
 
-This page is a **technical case study** based on the author's APS360 project report; it is **not a claim that a complete implementation is hosted in this profile repository**. The original project notebook and any data-dependent runtime dependencies should be reviewed and sanitized before publication. The CWRU data belong to their respective dataset provider and should be downloaded from the authoritative source.
-
-[Back to the AI/ML portfolio](../../README.md)
+[← AI/ML engineering portfolio README](../../README.md) · [← Interactive portfolio site](https://jillian06.github.io/ai-ml/)
