@@ -63,7 +63,8 @@ std::optional<int64_t> evaluate(Ins::Op op,int64_t a,int64_t b){
  else if(op==Ins::SUB)err=__builtin_sub_overflow(a,b,&out);
  else if(op==Ins::MUL)err=__builtin_mul_overflow(a,b,&out);
  else return std::nullopt;
- if(err)return std::nullopt;return out;
+ if(err) return std::nullopt;
+ return out;
 }
 IR fold(const IR& p){
  IR out;std::map<std::string,std::optional<int64_t>> env;
