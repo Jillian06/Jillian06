@@ -1,0 +1,21 @@
+name: Mini IR Optimizer C++17 CI
+on:
+  push:
+    branches: [intel-compiler-portfolio-2027]
+    paths:
+      - 'projects/mini-ir-optimizer/**'
+      - '.github/workflows/mini-ir.yml'
+  workflow_dispatch:
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile with GCC
+        run: |
+          cd projects/mini-ir-optimizer
+          g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror main.cpp -o mini_ir
+      - name: Run regression tests
+        run: |
+          cd projects/mini-ir-optimizer
+          python3 test.py
