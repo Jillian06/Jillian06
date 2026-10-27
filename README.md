@@ -24,7 +24,7 @@ My strongest existing project evidence is in **bit-accurate numerical verificati
 | **[Mini IR Optimizer (new C++17 exercise)](projects/mini-ir-optimizer/README.md)** | Simple straight-line IR, constant propagation/folding, backward liveness / dead assignment elimination, reference execution, tests | **C++17, IR, Optimization, Testing** |
 | **[ADC-Aware BFP FFT Accelerator](https://github.com/Jillian06/fmcw-radar-bfp-fft)** | Fixed-point arithmetic, overflow analysis, bit-accurate Python↔RTL reference checks, accuracy/performance trade-offs | **SystemVerilog, Python, FPGA, DSP** |
 | **[Safe A* Path Planning](https://github.com/Jillian06/safe-astar-path-planning)** | Graph algorithms, correctness and efficiency trade-offs, structured test cases, research-to-code translation | **Algorithms, Python, Testing** |
-| **[APS360 — Bearing Anomaly Detection](projects/aps360-bearing-anomaly-detection/README.md)** | Model execution pipelines, numerical preprocessing, evaluation methodology and PyTorch familiarity | **PyTorch, Python, Numerical Computing** |
+| **[APS360 — Bearing Anomaly Detection](https://github.com/Jillian06/Jillian06/blob/ai-ml-portfolio-2027/projects/aps360-bearing-anomaly-detection/README.md)** | Model execution pipelines, numerical preprocessing, evaluation methodology and PyTorch familiarity | **PyTorch, Python, Numerical Computing** |
 | **[Neuromorphic SNN Research](https://github.com/Jillian06/neuromorphic-snn-research)** | Hardware-aware computation and resource constraints; documentation-first research | **Hardware–software co-design** |
 
 ## Featured learning project — Mini IR Optimizer
