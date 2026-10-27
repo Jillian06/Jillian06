@@ -2,66 +2,84 @@
 
 # Jillian Yang
 
-**Electrical Engineering @ University of Toronto**  
-Robotics · Autonomous Systems · Embedded AI · Hardware–Software Co-Design
+**Electrical & Computer Engineering · University of Toronto**  
+**C++ · Compiler Fundamentals · Algorithms · Computer Architecture · Performance & Verification**
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-Jillian06.github.io-111827?style=flat-square)](https://Jillian06.github.io)
-[![GitHub](https://img.shields.io/badge/GitHub-Jillian06-181717?style=flat-square&logo=github)](https://github.com/Jillian06)
+[**Compiler Portfolio Site**](https://jillian06.github.io/intel-compiler/) · [**C++ IR Optimizer Demo**](projects/mini-ir-optimizer/README.md) · [**FPGA / FFT Research**](https://github.com/Jillian06/fmcw-radar-bfp-fft)
 
 </div>
 
 ## About
 
-I am an Electrical Engineering student at the University of Toronto with an AI & Robotics focus. I am interested in building intelligent systems that connect **planning, learning, sensing, control, and efficient hardware** rather than treating algorithms and physical systems as separate layers.
+I am a University of Toronto engineering student interested in how **programming languages, compilers, runtime systems, and computer architecture** translate algorithms into efficient execution on real hardware.
 
-My experience spans autonomous path planning, embedded robotic systems, spiking neural networks, FPGA/DSP acceleration, and applied machine learning. I am especially interested in research at the intersection of **robotics, machine learning, and hardware–software co-design**.
+My strongest existing project evidence is in **bit-accurate numerical verification for FPGA/DSP**, **algorithm design**, and **applied machine learning**. To develop compiler-specific fundamentals, I also built a small independent C++17 intermediate-representation (IR) optimization exercise. It is deliberately scoped as an educational project—not an LLVM, MLIR, or Triton contribution.
 
-> Open to 12–16 month PEY / research opportunities starting in **Summer 2027**.
+**Seeking a 12–16 month internship beginning May 2027** · Toronto, Canada.
 
-## Research interests
+## Selected work — most relevant to compiler engineering
 
-- Robot planning, autonomy, and decision-making
-- Learning-based robotics and embedded AI
-- Perception–planning–control integration
-- Efficient ML systems and hardware acceleration
-- FPGA / DSP architectures for intelligent sensing systems
-
-## Selected work
-
-| Project | Focus | Technologies |
+| Project | Why it is relevant | Technologies |
 |---|---|---|
-| [**ROS 2 Autonomous Navigation**](https://github.com/Jillian06/ros2-autonomous-navigation) | Custom 8-connected A* global planning, feedback path following, LiDAR interfaces, Gazebo simulation, automated tests | ROS 2, Python, Gazebo, A*, Control |
-| [**ADC-Aware BFP FFT Accelerator**](https://github.com/Jillian06/fmcw-radar-bfp-fft) | 1024-point radix-2 FFT architecture for FMCW radar with block-floating-point scaling and hardware-aware verification | SystemVerilog, Python, FPGA, DSP |
-| [**Autonomous Path Planning Research**](https://github.com/Jillian06/safe-astar-path-planning) | Enhanced A* navigation research with an IEEE conference publication | A*, Robotics, Algorithm Design |
-| [**Spiking Neural Networks**](https://github.com/Jillian06/neuromorphic-snn-research) | Low-power / hardware-aware neural inference and embedded-AI research | PyTorch, SNNs, Hardware-aware ML |
-| **Embedded Robotic Systems** | Sensor integration, PWM / motor control, debugging, and hardware–software interfaces | STM32, C/C++, Sensors, PCB |
+| **[Mini IR Optimizer (new C++17 exercise)](projects/mini-ir-optimizer/README.md)** | Simple straight-line IR, constant propagation/folding, backward liveness / dead assignment elimination, reference execution, tests | **C++17, IR, Optimization, Testing** |
+| **[ADC-Aware BFP FFT Accelerator](https://github.com/Jillian06/fmcw-radar-bfp-fft)** | Fixed-point arithmetic, overflow analysis, bit-accurate Python↔RTL reference checks, accuracy/performance trade-offs | **SystemVerilog, Python, FPGA, DSP** |
+| **[Safe A* Path Planning](https://github.com/Jillian06/safe-astar-path-planning)** | Graph algorithms, correctness and efficiency trade-offs, structured test cases, research-to-code translation | **Algorithms, Python, Testing** |
+| **[APS360 — Bearing Anomaly Detection](projects/aps360-bearing-anomaly-detection/README.md)** | Model execution pipelines, numerical preprocessing, evaluation methodology and PyTorch familiarity | **PyTorch, Python, Numerical Computing** |
+| **[Neuromorphic SNN Research](https://github.com/Jillian06/neuromorphic-snn-research)** | Hardware-aware computation and resource constraints; documentation-first research | **Hardware–software co-design** |
 
-## Technical toolkit
+## Featured learning project — Mini IR Optimizer
 
-**Programming:** Python · C · C++ · MATLAB  
-**Robotics / ML:** ROS 2 · PyTorch · A* Planning · Neural Networks · Signal Processing  
-**Embedded / Hardware:** STM32 · SystemVerilog · Verilog/VHDL · FPGA · PCB · SWD  
-**Tools:** Git · GitHub · Quartus · ModelSim · VS Code
+This toy exercise explores a small slice of the compiler middle end:
+
+```text
+Straight-line assignment program
+             ↓
+Parsing and semantic validation
+             ↓
+Simple three-address-style IR
+             ↓
+Constant propagation + folding
+             ↓
+Backward liveness analysis
+             ↓
+Dead assignment elimination
+             ↓
+Reference evaluation and regression tests
+```
+
+Example:
+
+```text
+# Input                   # Optimized IR
+unused = 6 * 7           print 35
+x = 3 + 4
+y = x * 5
+print y
+```
+
+The optimizer preserves observable printed outputs on supported non-overflowing inputs. The implementation avoids silently folding signed-integer overflow; overflow is an explicit runtime error in the reference evaluator. **Scope:** no SSA, control-flow graphs, instruction selection, code emission, LLVM dialects, GPU kernels, or industrial compiler integration.
+
+[**Read the compiler exercise →**](projects/mini-ir-optimizer/README.md)
+
+## Why hardware-aware software interests me
+
+On the **1024-point FMCW FFT** research project, I worked on dynamic range management, block-floating-point scaling and bit-accurate verification across Python and hardware implementations. The reported design improved SQNR by **24.31 dB** compared with fixed per-stage scaling in the documented experimental condition. This taught me to view performance and numerical correctness together—a useful mindset for backend optimization, compiler validation, and heterogeneous execution.
+
+[**See FFT documentation and verification →**](https://github.com/Jillian06/fmcw-radar-bfp-fft)
+
+## Technical background
+
+**Languages:** C · C++ (coursework and self-directed practice) · Python · MATLAB · SystemVerilog  
+**Foundations:** algorithms & data structures · computer organization · digital logic · finite-precision arithmetic  
+**Engineering workflow:** Git / GitHub · automated tests · debugging · reproducible comparisons · technical documentation  
+**AI / hardware:** PyTorch · FFT / DSP · FPGA · hardware-aware numerical analysis
+
+**Currently learning, not claiming production experience:** LLVM/Clang, MLIR, Triton, SYCL, GPU kernel tiling, compiler pass infrastructure, and GPU runtime/offload systems.
 
 ## Publication
 
 **B. Cao, Z. Yang, L. Yu, Y. Zhang**, “Research on the star algorithm for safe path planning,” *2023 IEEE International Conference on Control, Electronics and Computer Technology (ICCECT)*, pp. 105–109. [DOI](https://doi.org/10.1109/ICCECT57938.2023.10141167)
 
-## Current focus
+---
 
-I am currently strengthening my robotics software stack through ROS 2 navigation work while continuing to build depth in control, machine learning, and efficient intelligent systems.
-
-## Explore
-
-- 🌐 [Engineering portfolio](https://Jillian06.github.io)
-- 🤖 [ROS 2 Autonomous Navigation](https://github.com/Jillian06/ros2-autonomous-navigation)
-- 📡 [FMCW Adaptive BFP FFT](https://github.com/Jillian06/fmcw-radar-bfp-fft)
-- 🧭 [Safe A* Path Planning](https://github.com/Jillian06/safe-astar-path-planning)
-- 🧠 [Neuromorphic SNN Research](https://github.com/Jillian06/neuromorphic-snn-research)
-- 📚 [All public repositories](https://github.com/Jillian06?tab=repositories)
-
-<div align="center">
-
-**Robotics × ML × Embedded Systems × Hardware Acceleration**
-
-</div>
+*This is a dedicated compiler-oriented Git branch. My original GitHub profile and other application-specific branches remain unchanged.*
